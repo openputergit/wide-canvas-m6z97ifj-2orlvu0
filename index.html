@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Media Editor Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .upload-area {
+            border: 2px dashed #6366F1;
+            transition: all 0.3s ease;
+        }
+        .upload-area:hover {
+            border-color: #4F46E5;
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #6366F1;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-[#F8FAFC] text-[#1E293B]">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-[#6366F1]">MediaAI</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-700 hover:text-[#6366F1]">Home</a>
+                    <a href="#" class="text-gray-700 hover:text-[#6366F1]">About</a>
+                    <a href="#" class="text-gray-700 hover:text-[#6366F1]">Contact</a>
+                    <button id="loginBtn" class="bg-[#6366F1] text-white px-4 py-2 rounded-lg hover:bg-[#4F46E5] transition-colors">
+                        Login
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-12 slide-up">
+            <h1 class="text-4xl font-bold mb-4">Analyze Your Media & Learn the Editing Techniques</h1>
+            <p class="text-xl text-gray-600 mb-8">Upload a photo or video and get step-by-step tutorials on how it was edited</p>
+            
+            <!-- Upload Section -->
+            <div class="max-w-2xl mx-auto">
+                <div id="uploadArea" class="upload-area rounded-lg p-8 mb-8 cursor-pointer">
+                    <i class="bi bi-cloud-upload text-4xl text-[#6366F1] mb-4"></i>
+                    <p class="text-lg mb-2">Drag and drop files here</p>
+                    <p class="text-sm text-gray-500">or</p>
+                    <button id="browseBtn" class="mt-4 px-6 py-2 bg-[#6366F1] text-white rounded-lg hover:bg-[#4F46E5] transition-colors">
+                        Browse Files
+                    </button>
+                    <input type="file" id="fileInput" class="hidden" accept="image/*,video/*">
+                    <div id="loader" class="loader mx-auto mt-4"></div>
+                </div>
+
+                <div id="previewContainer" class="hidden mb-8">
+                    <h3 class="text-lg font-semibold mb-4">Preview</h3>
+                    <div class="aspect-video bg-gray-100 rounded-lg overflow-hidden">
+                        <img id="imagePreview" class="hidden w-full h-full object-cover" alt="Preview">
+                        <video id="videoPreview" class="hidden w-full h-full" controls></video>
+                    </div>
+                    <button id="analyzeBtn" class="mt-4 px-8 py-3 bg-[#6366F1] text-white rounded-lg hover:bg-[#4F46E5] transition-colors">
+                        Start Analysis
+                    </button>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold mb-8">How It Works</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="p-6 bg-white rounded-lg shadow-sm">
+                        <i class="bi bi-upload text-3xl text-[#6366F1] mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">Upload</h3>
+                        <p class="text-gray-600">Upload your photo or video file</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow-sm">
+                        <i class="bi bi-magic text-3xl text-[#6366F1] mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">Analyze</h3>
+                        <p class="text-gray-600">Our AI detects editing techniques</p>
+                    </div>
+                    <div class="p-6 bg-white rounded-lg shadow-sm">
+                        <i class="bi bi-journal-text text-3xl text-[#6366F1] mb-4"></i>
+                        <h3 class="text-lg font-semibold mb-2">Learn</h3>
+                        <p class="text-gray-600">Get detailed tutorials and steps</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1] mr-4">About</a>
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1] mr-4">Privacy Policy</a>
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1]">Terms of Service</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1]"><i class="bi bi-twitter text-xl"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1]"><i class="bi bi-instagram text-xl"></i></a>
+                    <a href="#" class="text-gray-600 hover:text-[#6366F1]"><i class="bi bi-linkedin text-xl"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const browseBtn = document.getElementById('browseBtn');
+        const imagePreview = document.getElementById('imagePreview');
+        const videoPreview = document.getElementById('videoPreview');
+        const previewContainer = document.getElementById('previewContainer');
+        const loader = document.getElementById('loader');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+
+        // Handle drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#4F46E5';
+            uploadArea.style.backgroundColor = 'rgba(99, 102, 241, 0.05)';
+        });
+
+        uploadArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            uploadArea.style.borderColor = '#6366F1';
+            uploadArea.style.backgroundColor = 'transparent';
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const file = e.dataTransfer.files[0];
+            handleFile(file);
+        });
+
+        // Handle browse button
+        browseBtn.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            handleFile(file);
+        });
+
+        function handleFile(file) {
+            if (!file) return;
+
+            loader.style.display = 'block';
+            
+            setTimeout(() => {
+                const fileType = file.type.split('/')[0];
+                const reader = new FileReader();
+
+                reader.onload = (e) => {
+                    if (fileType === 'image') {
+                        imagePreview.src = e.target.result;
+                        imagePreview.classList.remove('hidden');
+                        videoPreview.classList.add('hidden');
+                    } else if (fileType === 'video') {
+                        videoPreview.src = e.target.result;
+                        videoPreview.classList.remove('hidden');
+                        imagePreview.classList.add('hidden');
+                    }
+                    
+                    previewContainer.classList.remove('hidden');
+                    loader.style.display = 'none';
+                };
+
+                reader.readAsDataURL(file);
+            }, 1000);
+        }
+
+        // Analyze button click handler
+        analyzeBtn.addEventListener('click', () => {
+            // Add analysis logic here
+            alert('Analysis feature coming soon!');
+        });
+
+        // Login button click handler
+        document.getElementById('loginBtn').addEventListener('click', () => {
+            alert('Login feature coming soon!');
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
